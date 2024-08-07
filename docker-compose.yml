@@ -1,4 +1,4 @@
-version: '3.6'
+version: "3.6"
 services:
   db:
     image: mysql:8.0
@@ -14,10 +14,15 @@ services:
   web:
     container_name: WEB
     build:
-      context: ./src
+      context: src
       dockerfile: Dockerfile
+    volumes:
+      - "./src/WEB:/var/www/html" # sync the current dir on local machine to the dir of container
     ports:
       - 80:80
+    extra_hosts:
+      - "kibana.local:192.168.56.101"
+      - "elasticsearch.local:192.168.56.101"
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:4.8.1
     container_name: PHPMYADMIN_Web
