@@ -14,8 +14,6 @@ RUN apt-get update && \
     apt-get install filebeat packetbeat libpcap0.8 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-# Config hosts to connect ELK with HTTPS and TLS (after config ELK HTTPS and somethings else)
-# RUN echo "192.168.56.101 kibana.local elasticsearch.local" | tee -a /etc/hosts
 
 # Set working directory
 WORKDIR /var/www/html/
